@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Image,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -49,7 +50,7 @@ export default Search;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
-    paddingVertical: 15,
+    paddingVertical: Platform.OS === 'ios' ? 15 : 0,
     paddingHorizontal: 10,
     marginVertical: 10,
     backgroundColor: 'white',

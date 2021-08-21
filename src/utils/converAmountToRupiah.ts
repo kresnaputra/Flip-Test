@@ -1,10 +1,8 @@
 const convertAmountToRupiah = (amount: string) => {
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-  })
-    .format(+amount)
-    .slice(0, -3);
+  let reverse = amount.toString().split('').reverse().join(''),
+    result: any = reverse.match(/\d{1,3}/g);
+  result = result.join('.').split('').reverse().join('');
+  return `Rp ${result}`;
 };
 
 export default convertAmountToRupiah;

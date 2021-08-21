@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Modal from 'react-native-modal';
 
 import {HomeNavProps} from '../../types/navigations/home';
@@ -8,6 +14,7 @@ import {IReduxProps} from './index.container';
 import ItemCard from './components/ItemCard';
 import Search from './components/Search';
 import RadioButton, {TRadioButton} from './components/RadioButton';
+import {convertDate} from '../../utils/convertDateToString';
 
 interface IHomeScreen extends IReduxProps {
   navigation: HomeNavProps<'Home'>['navigation'];
@@ -19,13 +26,7 @@ const HomeScreen = ({getDataAction, data, navigation}: IHomeScreen) => {
   const [filterSelected, setFilterSelected] = useState<TRadioButton>('DEFAULT');
   const [filterSelectedName, setFilterSelectedName] = useState('URUTKAN');
   const [showModal, setShowModal] = useState(false);
-
-  useEffect(() => {
-    getDataAction(res => {
-      setListData(res);
-      setFilterDataItem(res);
-    });
-  }, [getDataAction]);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const filterByOrder = (id: TRadioButton, title: string) => {
     setFilterSelected(id);
@@ -75,7 +76,10 @@ const HomeScreen = ({getDataAction, data, navigation}: IHomeScreen) => {
     if (id === 'DATEASC') {
       setFilterDataItem(
         data.sort((a, b) => {
-          if (new Date(a.created_at) < new Date(b.created_at)) {
+          if (
+            new Date(convertDate(a.created_at)) <
+            new Date(convertDate(b.created_at))
+          ) {
             return 1;
           }
           return -1;
@@ -84,7 +88,10 @@ const HomeScreen = ({getDataAction, data, navigation}: IHomeScreen) => {
 
       setListData(
         data.sort((a, b) => {
-          if (new Date(a.created_at) < new Date(b.created_at)) {
+          if (
+            new Date(convertDate(a.created_at)) <
+            new Date(convertDate(b.created_at))
+          ) {
             return 1;
           }
           return -1;
@@ -96,7 +103,10 @@ const HomeScreen = ({getDataAction, data, navigation}: IHomeScreen) => {
     if (id === 'DATEDESC') {
       setFilterDataItem(
         data.sort((a, b) => {
-          if (new Date(a.created_at) > new Date(b.created_at)) {
+          if (
+            new Date(convertDate(a.created_at)) >
+            new Date(convertDate(b.created_at))
+          ) {
             return 1;
           }
           return -1;
@@ -105,7 +115,10 @@ const HomeScreen = ({getDataAction, data, navigation}: IHomeScreen) => {
 
       setListData(
         data.sort((a, b) => {
-          if (new Date(a.created_at) > new Date(b.created_at)) {
+          if (
+            new Date(convertDate(a.created_at)) >
+            new Date(convertDate(b.created_at))
+          ) {
             return 1;
           }
           return -1;
@@ -153,6 +166,16 @@ const HomeScreen = ({getDataAction, data, navigation}: IHomeScreen) => {
     setListData(filterByAmount);
   };
 
+  const getData = () => {
+    getDataAction(res => {
+      setListData(res);
+      setFilterDataItem(res);
+      setRefreshing(false);
+    });
+  };
+
+  useEffect(getData, [getDataAction]);
+
   return (
     <View style={styles.container}>
       <Search
@@ -162,6 +185,9 @@ const HomeScreen = ({getDataAction, data, navigation}: IHomeScreen) => {
         title={filterSelectedName}
       />
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getData} />
+        }
         data={search.length === 0 ? filterDataItem : listData}
         extraData={[listData, filterDataItem]}
         keyExtractor={item => item.id}

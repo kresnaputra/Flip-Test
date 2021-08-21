@@ -11,8 +11,8 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 import {colors} from '../../constants/colors';
 import {HomeNavProps} from '../../types/navigations/home';
-import convertAmountToRupiah from '../../utils/converAmountToRupiah';
 import convertDateToString from '../../utils/convertDateToString';
+import convertAmountToRupiah from '../../utils/converAmountToRupiah';
 
 interface IDetailScreen {
   route: HomeNavProps<'Detail'>['route'];

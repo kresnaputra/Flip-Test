@@ -13,10 +13,15 @@ const monthToString: any = {
   11: 'Desember',
 };
 
+// need to convert date to make sure javasciprt engine on mobile work properly
+export const convertDate = (date: string) => {
+  return date.replace(/ /g, 'T');
+};
+
 const convertDateToString = (date: string) => {
-  return `${new Date(date).getDate()} ${
-    monthToString[new Date(date).getMonth()]
-  } ${new Date(date).getFullYear()}`;
+  return `${new Date(convertDate(date)).getDate()} ${
+    monthToString[new Date(convertDate(date)).getMonth()]
+  } ${new Date(convertDate(date)).getFullYear()}`;
 };
 
 export default convertDateToString;

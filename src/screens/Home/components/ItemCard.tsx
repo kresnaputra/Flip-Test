@@ -44,6 +44,7 @@ const ItemCard = ({data}: IItemCard) => {
         <Text style={{marginVertical: 5}}>
           {data.beneficiary_name.toUpperCase()}
         </Text>
+
         <Text>
           {convertAmountToRupiah(data.amount)} •{' '}
           {convertDateToString(data.completed_at)}
