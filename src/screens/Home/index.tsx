@@ -23,6 +23,7 @@ const HomeScreen = ({getDataAction, data, navigation}: IHomeScreen) => {
   useEffect(() => {
     getDataAction(res => {
       setListData(res);
+      setFilterDataItem(res);
     });
   }, [getDataAction]);
 
