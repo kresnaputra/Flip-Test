@@ -1,5 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import {colors} from '../../constants/colors';
 import {HomeNavProps} from '../../types/navigations/home';
@@ -11,11 +19,22 @@ interface IDetailScreen {
 }
 const DetailScreen = ({route}: IDetailScreen) => {
   const data = route.params;
+
+  const onCopy = () => {
+    Clipboard.setString(`ID TRANSAKSI: #${data.id}`);
+    Alert.alert('Copy ID Transaksi Berhasil');
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.containerHorizontal}>
+      <TouchableOpacity onPress={onCopy} style={styles.containerHorizontal}>
         <Text style={styles.textBold}>ID TRANSAKSI: #{data.id}</Text>
-      </View>
+        <Image
+          style={{width: 15, height: 15, marginLeft: 5}}
+          resizeMode="contain"
+          source={require('../../assets/images/copy.png')}
+        />
+      </TouchableOpacity>
       <View style={[styles.line, {backgroundColor: '#FBFBFB'}]} />
       <View style={[styles.containerHorizontal, {marginBottom: 0}]}>
         <Text style={[styles.textBold, {flex: 1}]}>DETAIL TRANSAKSI</Text>
