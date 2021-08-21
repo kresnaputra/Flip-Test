@@ -28,6 +28,7 @@ const Search = ({onChangeText, value, onPress, title}: ISearch) => {
       <TextInput
         placeholder="Cari nama, bank, atau nominal"
         style={styles.textInput}
+        placeholderTextColor="gray"
         onChangeText={onChangeText}
         value={value}
       />
@@ -60,6 +61,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     marginLeft: 10,
+    color: 'black',
   },
   orderBy: {
     color: colors.ORANGE,
