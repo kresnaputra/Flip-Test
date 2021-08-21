@@ -47,7 +47,7 @@ const ItemCard = ({data}: IItemCard) => {
 
         <Text>
           {convertAmountToRupiah(data.amount)} •{' '}
-          {convertDateToString(data.completed_at)}
+          {convertDateToString(data.created_at)}
         </Text>
       </View>
       <View style={{marginRight: 10}}>{renderChecking()}</View>

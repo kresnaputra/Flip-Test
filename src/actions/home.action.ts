@@ -36,7 +36,7 @@ export const getDataAction = (
               beneficiary_bank: data.beneficiary_bank,
               beneficiary_name: data.beneficiary_name,
               completed_at: data.completed_at,
-              created_at: data.completed_at,
+              created_at: data.created_at,
               fee: data.fee,
               remark: data.remark,
               sender_bank: data.sender_bank,
